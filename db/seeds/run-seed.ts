@@ -4,10 +4,13 @@ import { householdsSchema, HouseholdsArrayInterface } from "./schemas/households
 import { households } from "../testData/households";
 import { loginData } from "../testData/loginRegister";
 
-const Users = mongoose.model <UsersArray> ("User", loginRegister)
-const Households = mongoose.model <HouseholdsArrayInterface> ("Household", householdsSchema)
 async function main () {
-    await mongoose.connect("mongodb://localhost:27017/HousemateTest")
+    const db = await mongoose.createConnection("mongodb://localhost:27017/HousemateTest").asPromise()
+    const Users = db.model <UsersArray> ("User", loginRegister)
+    const Households = db.model <HouseholdsArrayInterface> ("Household", householdsSchema)
+    await Users.deleteMany({})
+    await Households.deleteMany({})
+    
     const usersEntry = new Users(loginData)
     
     await usersEntry.save()
@@ -15,13 +18,6 @@ async function main () {
             console.log(err);
     }); 
     const householdsEntry = new Households(households)
-    householdsEntry.households.forEach((household, index) => {
-        householdsEntry.markModified(`households[${index}].users`)
-        householdsEntry.markModified(`households[${index}].tasks`)
-    })
-    
-    // console.log(householdsEntry);
-    
 
     await householdsEntry.save()
     .catch((err) => {
