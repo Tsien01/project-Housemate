@@ -1,5 +1,4 @@
-{
-  "households": [
+export const households = [
     {
       "household_id": "h48a20f58-2ee7-463f-b702-2f949d42df6d",
       "name": "Lemke household",
@@ -491,4 +490,3 @@
       "currWinner": "u7c59ba19-f420-4878-8ac9-19896e1b91d7"
     }
   ]
-}

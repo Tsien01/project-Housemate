@@ -1,11 +1,13 @@
 import mongoose from "mongoose"
 import { loginRegister, UsersArray } from "./schemas/loginRegisterSchema";
+import { households } from "../testData/households";
+import { loginData } from "../testData/loginRegister";
 
 async function main () {
     await mongoose.connect("mongodb://localhost:27017/HousemateTest")
 
-    const entry = new Users()
-
+    const entry = new Users(loginData)
+    
     await entry.save()
     .catch(
         (err) => {
