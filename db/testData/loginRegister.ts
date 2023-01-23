@@ -1,6 +1,6 @@
 import { UsersArray } from "../seeds/schemas/loginRegisterSchema"
 
-export const loginData = <UsersArray> <unknown> {
+export const loginData = <UsersArray> {
   users: [
     {
       "user_id": "ufe94c30c-de4f-4b06-b924-3462481dd8d3",

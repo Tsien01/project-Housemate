@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface UserData {
-    userId: string, 
+    user_id: string, 
     household_id: string, 
     firstName: string, 
     lastName: string, 
@@ -13,7 +13,7 @@ export interface UserData {
 }
 
 export const userSchema = new mongoose.Schema <UserData> ({
-    userId: {type: String, required: true}, 
+    user_id: {type: String, required: true}, 
     firstName: {type: String, required: true}, 
     lastName: {type: String, required: true}, 
     picture: {type: String, required: false}, 
