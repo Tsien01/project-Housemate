@@ -1,58 +1,20 @@
-import mongoose, { mongo } from "mongoose"
+import mongoose from "mongoose"
+import { UserData } from "./schemas/userSchema";
+import { loginRegister } from "./schemas/loginRegisterSchema";
 
 async function main () {
     await mongoose.connect("mongodb://localhost:27017/HousemateTest")
 
+    const entry = new Users()
 
-    const entry = new User({
-        userId: 1, 
-        name: "Bob", 
-        email: "bobbybob@yahoo.com", 
-        permissions: {
-            hash: "testing", 
-            salt: "salting", 
-            membershipKey: "householdKey", 
-        }
-    })
-    await entry.save().then(() => {
-        console.log(entry.email);
-        return true
-    })
+    await entry.save()
     .catch(
         (err) => {
             console.log(err);
     }); 
 }
 
-interface Permissions {
-    hash: string, 
-    salt: string, 
-    membershipKey: string,     
-}
-
-interface UserData {
-    userId: number, 
-    name: string, 
-    email: string, 
-    permissions: Permissions, 
-    picture?: string, 
-}
-
-const permissionsSchema = new mongoose.Schema <Permissions> ({
-    hash: {type: String, required: true}, 
-    salt: {type: String, required: true}, 
-    membershipKey: {type: String, required: true}
-})
-
-const userSchema = new mongoose.Schema <UserData> ({
-    userId: {type: Number, required: true}, 
-    name: {type: String, required: true}, 
-    email: {type: String, match: /^\S+@\S+\.\S+$/, required: true}, 
-    permissions: {type: permissionsSchema, required:true}, 
-    picture: {type: String, required: false}, 
-})
-
-const User = mongoose.model<UserData>("User", userSchema)
+const Users = mongoose.model<UserData>("Users", loginRegister)
 
 main()
 .then(() => {
