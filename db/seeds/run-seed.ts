@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
-import { UserData } from "./schemas/userSchema";
-import { loginRegister } from "./schemas/loginRegisterSchema";
+import { loginRegister, UsersArray } from "./schemas/loginRegisterSchema";
 
 async function main () {
     await mongoose.connect("mongodb://localhost:27017/HousemateTest")
@@ -14,7 +13,7 @@ async function main () {
     }); 
 }
 
-const Users = mongoose.model<UserData>("Users", loginRegister)
+const Users = mongoose.model <UsersArray> ("Users", loginRegister)
 
 main()
 .then(() => {
