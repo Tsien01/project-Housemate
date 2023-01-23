@@ -1,9 +1,9 @@
 import mongoose, { mongo } from "mongoose"
 
 async function main () {
-    await mongoose.connect("mongodb://127.0.0.1:27017/")
-    
-    mongoose.connection.useDb("HousemateTest") //not working atm
+    await mongoose.connect("mongodb://localhost:27017/HousemateTest")
+
+
     const entry = new User({
         userId: 1, 
         name: "Bob", 
@@ -16,6 +16,11 @@ async function main () {
     })
     await entry.save().then(() => {
         console.log(entry.email);
+        return true
+    })
+    .catch(
+        (err) => {
+            console.log(err);
     }); 
 }
 
@@ -52,7 +57,7 @@ const User = mongoose.model<UserData>("User", userSchema)
 main()
 .then(() => {
     console.log("I'm working!");
-    return true
+    mongoose.disconnect()
 })
 .catch((err) => {
     console.log(err);
