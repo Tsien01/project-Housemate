@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 import { seed } from "./seed";
-import { db } from "../connection";
 
 
 seed()

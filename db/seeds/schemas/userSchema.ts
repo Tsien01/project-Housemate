@@ -7,8 +7,7 @@ export interface UserData {
     lastName: string, 
     picture?: string, 
     email: string, 
-    hash: string, 
-    salt: string, 
+    hashed_password: string,  
     household_password: string, 
 }
 
@@ -18,7 +17,6 @@ export const userSchema = new mongoose.Schema <UserData> ({
     lastName: {type: String, required: true}, 
     picture: {type: String, required: false}, 
     email: {type: String, match: /^\S+@\S+\.\S+$/, required: true}, 
-    hash: {type: String, required: true}, 
-    salt: {type: String, required: true}, 
+    hashed_password: {type: String, required: true}, 
     household_password: {type: String, required: true}, 
 })
