@@ -1,9 +1,10 @@
-// import express from "express"
-// const {getUsers} = require("")
+import * as express from "express"
+const { getUserById, postNewUser } = require("../controllers/users.controllers")
 
-// const usersRouter = express.Router()
+const usersRouter = express.Router()
 
-// usersRouter.get(":user_id", getUsers)
+usersRouter.get("/:user_id", getUserById)
 
+usersRouter.post("/", postNewUser)
 
-// module.exports = usersRouter
+module.exports = usersRouter

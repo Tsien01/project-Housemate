@@ -1,7 +1,6 @@
 import { HouseholdsArrayInterface } from "../seeds/schemas/householdsSchema"
 
-export const households = <HouseholdsArrayInterface>{
-  "households": [
+export const households = <HouseholdsArrayInterface>[
     {
       "household_id": "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
       "name": "Hudson household",
@@ -927,4 +926,3 @@ export const households = <HouseholdsArrayInterface>{
       "currWinner": "u119610da-6892-4b0e-9b7c-004fb4020727"
     }
   ]
-}

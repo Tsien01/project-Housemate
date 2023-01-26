@@ -1,7 +1,6 @@
 import { UsersArray } from "../seeds/schemas/loginRegisterSchema"
 
-export const loginData = <UsersArray> {
-  "users": [
+export const loginData = <UsersArray> [
     {
       "user_id": "u11b18310-6636-4709-b0ee-2dd03e5b03ec",
       "household_id": "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
@@ -223,4 +222,3 @@ export const loginData = <UsersArray> {
       "household_password": "deadlyeviction"
     }
   ]
-}

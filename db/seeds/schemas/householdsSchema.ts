@@ -12,9 +12,7 @@ export interface HouseholdObjectInterface extends HouseholdUsersObjectInterface,
     currWinner: string, 
 }
 
-export interface HouseholdsArrayInterface extends HouseholdObjectInterface {
-    households: Array<HouseholdObjectInterface>
-}
+export interface HouseholdsArrayInterface extends Array<HouseholdObjectInterface> {}
 
 export const householdObjectSchema = new mongoose.Schema <HouseholdObjectInterface> ({
     household_id: {type: String, required: true}, 
@@ -26,6 +24,4 @@ export const householdObjectSchema = new mongoose.Schema <HouseholdObjectInterfa
     currWinner: {type: String, required: true}, 
 })
 
-export const householdsSchema = new mongoose.Schema <HouseholdsArrayInterface> ({
-    households: [householdObjectSchema]
-})
+export const householdsSchema = new mongoose.Schema <HouseholdsArrayInterface> ([householdObjectSchema])

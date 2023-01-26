@@ -8,7 +8,10 @@ exports.selectUserById = async (user_id) => {
 
   console.log(dbModel, "this is the dbmodel")
 
-  const user = await dbModel.aggregate().unwind({ path: `$users` }).match({ "users.user_id": `${user_id}`})
-
-  return user[0].users;
+  const user = await dbModel.find({ user_id })
+  return user[0]
 };
+
+exports.insertNewUser = (body) => {
+  console.log("I'm not ready!");
+} 

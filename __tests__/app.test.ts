@@ -23,7 +23,7 @@ describe("GET /api/users/:user_id", () => {
         expect(user).toEqual(
           expect.objectContaining({
             user_id: "u11b18310-6636-4709-b0ee-2dd03e5b03ec",
-            // household_id: "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
+            household_id: "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
             firstName: "Pierre",
             lastName: "Hudson",
             picture:

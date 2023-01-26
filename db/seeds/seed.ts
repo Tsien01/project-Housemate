@@ -12,14 +12,12 @@ export async function seed () {
     
     await Households.deleteMany({})
     
-    const usersEntry = new Users(loginData)
-    await usersEntry.save()
+    await Users.insertMany(loginData)
     .catch((err) => {
             console.log(err);
     }); 
 
-    const householdsEntry = new Households(households)
-    await householdsEntry.save()
+    await Households.insertMany(households)
     .catch((err) => {
         console.log(err);
     })    

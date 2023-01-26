@@ -1,16 +1,16 @@
 // import cors from "cors"
-// import express from "express"
 const express = require("express")
-const app=express()
-// const apiRouter = require("./routers/api.routers")
-const {getUserById} = require("./controllers/users.controllers")
+const app = express()
+const usersRouter = require("./routers/users.routers")
+const householdsRouter = require("./routers/households.routers")
+
+import { handleErrors } from "./controllers/errors.controllers"
 
 // app.use(cors())
 
-// app.use("/api", apiRouter)
+app.use("/api/users", usersRouter)
+app.use("/api/households", householdsRouter)
 
-app.get("/api/users/:user_id", getUserById)
-
-
+app.use(handleErrors)
 
 module.exports = app
