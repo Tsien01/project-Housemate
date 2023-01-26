@@ -15,26 +15,39 @@ beforeEach(() => {
 
 describe("GET /api/users/:user_id", () => {
   it("should return a user object with the key of user", () => {
-    const user_id = "u11b18310-6636-4709-b0ee-2dd03e5b03ec";
-    return request(app)
+      const user_id = "63d29422d66c581031b481bc";
+      return request(app)
       .get(`/api/users/${user_id}`)
       .expect(200)
       .then(({ body: { user } }) => {
         expect(user).toEqual(
           expect.objectContaining({
-            user_id: "u11b18310-6636-4709-b0ee-2dd03e5b03ec",
             household_id: "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
             firstName: "Pierre",
             lastName: "Hudson",
             picture:
-              "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/42.jpg",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/42.jpg",
             email: "Dawson_Wintheiser@gmail.com",
             hashed_password:
-              "$2b$10$VHQP1/vF0R64mFTmqHJWd.wzkSoKqlcLlarJ3dseVGMuFbKzfUGgO",
+            "$2b$10$VHQP1/vF0R64mFTmqHJWd.wzkSoKqlcLlarJ3dseVGMuFbKzfUGgO",
             household_password: "antiqueequivalent",
             _id: expect.any(String)
           })
-        );
+          );
+        });
+        
       });
-  });
+      
+      it.skip("should return a 404 if _id is valid but doesn't exist", () => {
+        const user_id = "akataoihokna"
+        
+        return request(app)
+        .get(`/api/users/${user_id}`)
+          .expect(404)
+        .then(({body:{message}}) => {
+          expect(message).toBe('404 Not Found')
+        })
+  
+})     
+
 });

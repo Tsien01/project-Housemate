@@ -12,7 +12,6 @@ export interface UserData {
 }
 
 export const userSchema = new mongoose.Schema <UserData> ({
-    user_id: {type: String, required: true}, 
     household_id: {type: String, required: true}, 
     firstName: {type: String, required: true}, 
     lastName: {type: String, required: true}, 
