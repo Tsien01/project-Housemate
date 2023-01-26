@@ -1,13 +1,19 @@
 import mongoose from "mongoose"
 
 export interface HouseholdUsersObjectInterface {
-    id: string, 
-    permissions: ["admin" | "member"], 
     currScore: number
+    firstName: string, 
+    lastName: string, 
+    picture: string, 
+    email: string, 
+    permissions: ["admin" | "member"], 
 }
 
 export const householdUsersSchema = new mongoose.Schema <HouseholdUsersObjectInterface> ({
-    id: {type: String, required: true}, 
-    permissions: {type: [String], required: true}, 
     currScore: {type: Number, required: true}, 
+    firstName: {type: String, required: true}, 
+    lastName: {type: String, required: true}, 
+    picture: {type: String, required: true}, 
+    email: {type: String, required: true}, 
+    permissions: {type: [String], required: true}, 
 })

@@ -3,7 +3,6 @@ import { HouseholdUsersObjectInterface, householdUsersSchema } from "./household
 import { TasksObjectInterface, tasksSchema } from "./tasksSchema";
 
 export interface HouseholdObjectInterface extends HouseholdUsersObjectInterface, TasksObjectInterface {
-    household_id: string, 
     name: string, 
     household_password: string, 
     description: string, 
@@ -15,10 +14,9 @@ export interface HouseholdObjectInterface extends HouseholdUsersObjectInterface,
 export interface HouseholdsArrayInterface extends Array<HouseholdObjectInterface> {}
 
 export const householdObjectSchema = new mongoose.Schema <HouseholdObjectInterface> ({
-    household_id: {type: String, required: true}, 
     name: {type: String, required: true}, 
     household_password: {type: String, required: true}, 
-    description: {type: String, required: true}, 
+    description: {type: String, required: false}, 
     users: [householdUsersSchema], 
     tasks: [tasksSchema], 
     currWinner: {type: String, required: true}, 
