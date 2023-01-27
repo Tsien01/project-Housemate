@@ -9,9 +9,8 @@ exports.getUserByEmail = (req, res, next) =>{
 
 exports.logInUser = (req, res, next) => { 
     authenticateUserLogin(req.body).then((household)=>{
-        
         res.status(200).send(household)
-    })
+    }).catch((err)=> {next(err)})
 }
 
 exports.postNewUser = (req, res, next) => {
