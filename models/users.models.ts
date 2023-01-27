@@ -29,13 +29,21 @@ exports.authenticateUserLogin = async (body) => {
   const email = body.email
   const dbModel = await db.model("user", loginRegister);
   const user = await dbModel.find({ email: email })
+  if (user.length === 0) {
+    return Promise.reject({
+      message: "400 Bad Request", 
+      status: 400, 
+    })
+  }
   
   if (await bcrypt.compare(body.password, user[0]["hashed_password"])) {
     const dbHouseholdModel = await db.model("household", householdObjectSchema);
     const household = await dbHouseholdModel.find({"users.email": email})
     return {household: household[0], email: email}
   }
-  return Promise.reject({message: "401 unauthorised", status: 401})
+  console.log("password doesn't match");
+  
+  return Promise.reject({message: "401 Unauthorised", status: 401})
 }
 
 exports.insertNewUser = (body) => {
