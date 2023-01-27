@@ -251,4 +251,68 @@ describe("POST /api/households", () => {
   });
 });
 
-describe("POST /api/households", () => {});
+describe.only("PATCH /api/households/:household_name", () => {
+  it.only("status 200: should return patched household with new user added", () => {
+    const body = {
+      email: "AdrianB@yahoo.com",
+      name: "Adrian B",
+      household_password: "automaticbouquet",
+    };
+    return request(app)
+      .patch(`/api/households/:household_id`)
+      .send(body)
+      .expect(200)
+      .then(({ body: { household } }) => {
+        expect(household).toEqual(
+          expect.objectContaining({
+            name: expect.any(String),
+            household_password: expect.any(String),
+            users: expect.any(Array),
+            tasks: expect.any(Array),
+          })
+      );
+    })
+  })
+  it("should return a 400 bad request if request body is invalid", () => {
+    const body = {
+      request: "DROP TABLES",
+      email: "evilUser@evil",
+      deadline: "world domination",
+    };
+    return request(app)
+      .patch(`/api/households/Osinski_household`)
+      .send(body)
+      .expect(400)
+      .then(({ body: { error } }) => {
+        expect(error.message).toBe(err400);
+      });
+  });
+  it("should return a 404 not found if household name doesnt match", () => {
+    const body = {
+      household_password: "murkyrecognition",
+      name: "Pratik Gurung",
+      email: "Pratiksemail@bing.com",
+    };
+    return request(app)
+      .patch(`/api/households/Bobbys_household`)
+      .send(body)
+      .expect(404)
+      .then(({ body: { error } }) => {
+        expect(error.message).toBe(err404);
+      });
+  });
+  it("should return 401 unauthorised if household password doesnt match", () => {
+    const body = {
+      household_password: "notAPassword",
+      name: "Pratik Gurung",
+      email: "Pratiksemail@bing.com",
+    };
+    return request(app)
+      .patch(`/api/households/Johnson_household`)
+      .send(body)
+      .expect(401)
+      .then(({ body: { error } }) => {
+        expect(error.message).toBe(err401);
+      });
+  });
+});
