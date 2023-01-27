@@ -108,4 +108,103 @@ describe('POST /api/users/authentication', () => {
           expect(error.message).toBe("401 Unauthorised")
         })
     });
+    describe('POST /api/users', () => {
+      it('should return a 201 and an object containing the email if the user was succesfully registered', () => {
+        const body = {
+          email: "larrygary@outlook.com", 
+          password: "larrygarypassword"
+        }
+        return request(app)
+          .post(`/api/users/`)
+          .send(body)
+          .expect(201)
+          .then(({ body: { user }}) => {
+            expect(user.email).toBe("larrygary@outlook.com")
+          })
+      });
+      it('should return 400 and an error if provided an invalid request', () => {
+        const body = {
+          email: "gg@com", 
+          password: "31283812", 
+          message: "DROP TABLES"
+        }
+        return request(app)
+          .post(`/api/users/`)
+          .send(body)
+          .expect(400)
+          .then(({ body: { error }}) => {
+            expect(error.message).toBe(err400)
+          })
+      });
+    });
+    describe('POST /api/households/:household_name', () => {
+      it('should return a 200, the users email, and a household object if successful', () => {
+        const body = {
+          household_password: "murkyrecognition", 
+          name: "Pratik Gurung", 
+          email: "Pratiksemail@bing.com", 
+        }
+        return request(app)
+          .post(`/api/households/Osinski_household`)
+          .send(body)
+          .expect(200)
+          .then(({ body: { user } }) => {
+            expect(user).toEqual(
+              expect.objectContaining({
+                email: expect.any(String), 
+                household: expect.objectContaining({
+                  name: expect.any(String), 
+                  household_password: expect.any(String), 
+                  description: expect.any(String), 
+                  users: expect.any(Array), 
+                  tasks: expect.any(Array), 
+                  currWinner: expect.any(String)
+                })
+              })
+            )
+          })
+      });
+      it('should return a 400 bad request if request body is invalid', () => {
+        const body = {
+          request: "DROP TABLES", 
+          email: "evilUser@evil", 
+          deadline: "world domination"
+        }
+        return request(app)
+          .post(`/api/households/Osinski_household`)
+          .send(body)
+          .expect(400)
+          .then(({ body: { error } }) => {
+            expect(error.message).toBe(err400)
+          })
+      });
+      it('should return a 404 not found if household name doesnt match', () => {
+        const body = {
+          household_password: "murkyrecognition", 
+          name: "Pratik Gurung", 
+          email: "Pratiksemail@bing.com", 
+        }
+        return request(app)
+          .post(`/api/households/Bobbys_household`)
+          .send(body)
+          .expect(404)
+          .then(({ body: { error } }) => {
+            expect(error.message).toBe(err404)
+          })
+      });
+      it('should should return 401 unauthorised if household password doesnt match', () => {
+        const body = {
+          household_password: "notAPassword", 
+          name: "Pratik Gurung", 
+          email: "Pratiksemail@bing.com", 
+        }
+        return request(app)
+          .post(`/api/households/Johnson_household`)
+          .send(body)
+          .expect(401)
+          .then(({ body: { error } }) => {
+            expect(error.message).toBe(err401)
+          })
+      });
+    });
 });
