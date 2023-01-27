@@ -110,7 +110,7 @@ describe("POST /api/users/authentication", () => {
   });
 });
 
-describe("POST /api/users", () => {
+describe.only("POST /api/users", () => {
   it("should return a 201 and an object containing the email if the user was succesfully registered", () => {
     const body = {
       email: "larrygary@outlook.com",
@@ -257,7 +257,7 @@ describe("PATCH /api/households/:household_name", () => {
       email: "Shaun.Beatty65@yahoo.com",
       userName: "Lukas Krajcik",
       name: "New Household",
-      household_password: "newpassword"
+      household_password: "newpassword",
     };
     return request(app)
       .patch(`/api/households/:household_id`)
@@ -271,9 +271,9 @@ describe("PATCH /api/households/:household_name", () => {
             users: expect.any(Array),
             tasks: expect.any(Array),
           })
-      );
-    })
-  })
+        );
+      });
+  });
   it("should return a 400 bad request if request body is invalid", () => {
     const body = {
       request: "DROP TABLES",
@@ -318,22 +318,23 @@ describe("PATCH /api/households/:household_name", () => {
   });
 });
 
-describe('PATCH /api/households/:household_name/tasks', () => {
-  it('status 200: responds with updated household object', () => {
+describe("PATCH /api/households/:household_name/tasks", () => {
+  it("status 200: responds with updated household object", () => {
     const body = {
-      "email": "Louie24@yahoo.com",
-        "created_at": "2023-01-26T11:11:31.569Z",
-        "deadline": null,
-        "title": "parsing",
-        "description": "Use the cross-platform OCR monitor, then you can copy the open-source system!",
-        "completion": true, //changed here
-        "task_value": 4,
-        "tags": []
-    }
+      email: "Louie24@yahoo.com",
+      created_at: "2023-01-26T11:11:31.569Z",
+      deadline: null,
+      title: "parsing",
+      description:
+        "Use the cross-platform OCR monitor, then you can copy the open-source system!",
+      completion: true, //changed here
+      task_value: 4,
+      tags: [],
+    };
     return request(app)
       .patch("/api/households/Krajcik_household/tasks")
       .expect(200)
-      .then(({ body: { household }}) => {
+      .then(({ body: { household } }) => {
         expect(household).toEqual(
           expect.objectContaining({
             name: expect.any(String),
@@ -341,39 +342,39 @@ describe('PATCH /api/households/:household_name/tasks', () => {
             users: expect.any(Array),
             tasks: expect.any(Array),
           })
-        )
-      })
+        );
+      });
   });
 });
 
-describe('DELETE /api/households/:household_name/tasks', () => {
-  it('status 204: no content', () => {
+describe("DELETE /api/households/:household_name/tasks", () => {
+  it("status 204: no content", () => {
     return request(app)
       .delete(`/api/households/Krajcik_household/tasks`)
       .expect(204)
       .then(({ body }) => {
-        expect(body).toBe(undefined)
-      })
+        expect(body).toBe(undefined);
+      });
   });
 });
 
-describe('POST /api/households/:household_name/tasks', () => {
-  it('status 200: responds with updated household object', () => {
+describe("POST /api/households/:household_name/tasks", () => {
+  it("status 200: responds with updated household object", () => {
     const body = {
-      email: "Louie24@yahoo.com", 
-      created_at: Date(), 
-      deadline: "24/7/2023", 
-      title: "cleaning", 
-      description: "", 
-      completion: false, 
-      task_value: 4, 
-      tags: [], 
-    }
+      email: "Louie24@yahoo.com",
+      created_at: Date(),
+      deadline: "24/7/2023",
+      title: "cleaning",
+      description: "",
+      completion: false,
+      task_value: 4,
+      tags: [],
+    };
     return request(app)
       .post(`/api/households/Krajcik_household/tasks`)
       .send(body)
       .expect(200)
-      .then(({ body: { household }}) => {
+      .then(({ body: { household } }) => {
         expect(household).toEqual(
           expect.objectContaining({
             name: expect.any(String),
@@ -381,35 +382,35 @@ describe('POST /api/households/:household_name/tasks', () => {
             users: expect.any(Array),
             tasks: expect.any(Array),
           })
-        )
-      })
+        );
+      });
   });
-  it('status 400: missing fields', () => {
+  it("status 400: missing fields", () => {
     const body = {
-      created_at: Date(), 
-      deadline: "24/7/2023", 
-      description: "", 
-      completion: false, 
-      task_value: 4, 
-      tags: [], 
-    }
+      created_at: Date(),
+      deadline: "24/7/2023",
+      description: "",
+      completion: false,
+      task_value: 4,
+      tags: [],
+    };
     return request(app)
       .post(`/api/households/Krajcik_household/tasks`)
       .send(body)
       .expect(400)
-      .then(({ body: { error }}) => {
-        expect(error.message).toBe(err400)
-      })
+      .then(({ body: { error } }) => {
+        expect(error.message).toBe(err400);
+      });
   });
 });
 
-describe('DELETE /api/households/:household_name', () => {
-  it('status 204: no content', () => {
+describe("DELETE /api/households/:household_name", () => {
+  it("status 204: no content", () => {
     return request(app)
       .delete(`/api/households/Krajcik_household/users/Louie24@yahoo.com`)
       .expect(204)
       .then((response) => {
-        expect(response.body).toBe(undefined)
-      })
+        expect(response.body).toBe(undefined);
+      });
   });
 });
