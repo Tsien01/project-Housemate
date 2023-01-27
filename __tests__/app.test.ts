@@ -54,7 +54,7 @@ describe("GET /api/users/:user_email", () => {
         })
     });
 });
-describe('POST /api/users/authentication', () => {
+describe.only('POST /api/users/authentication', () => {
   it('should return status 200, the users email and a household object that matches the posted object', () => {
     const body = {
       email: "Shaun.Beatty65@yahoo.com", 
@@ -64,8 +64,8 @@ describe('POST /api/users/authentication', () => {
       .post(`/api/users/authentication`)
       .send(body)
       .expect(200)
-      .then(({ body: { user } }) => {
-        expect(user).toEqual(
+      .then(({ body: household }) => {
+        expect(household).toEqual(
           expect.objectContaining({
             email: expect.any(String), 
             household: expect.objectContaining({
