@@ -65,8 +65,8 @@ describe("POST /api/users/authentication", () => {
       .post(`/api/users/authentication`)
       .send(body)
       .expect(200)
-      .then(({ body: { user } }) => {
-        expect(user).toEqual(
+      .then(({ body: household }) => {
+        expect(household).toEqual(
           expect.objectContaining({
             email: expect.any(String),
             household: expect.objectContaining({
