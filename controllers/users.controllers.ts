@@ -3,13 +3,15 @@ const { selectUserByEmail, insertNewUser, authenticateUserLogin } = require("../
 exports.getUserByEmail = (req, res, next) =>{
     
     selectUserByEmail(req.params.user_email).then((user)=>{
-        console.log(user, "user in controller");
         res.status(200).send({ user })
     }).catch((err) => {next(err)})
 }
 
-exports.logInUser = (req, res, next) => {
-    authenticateUserLogin(req)
+exports.logInUser = (req, res, next) => { 
+    authenticateUserLogin(req.body).then((household)=>{
+        
+        res.status(200).send(household)
+    })
 }
 
 exports.postNewUser = (req, res, next) => {
