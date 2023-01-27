@@ -1,9 +1,11 @@
 import * as express from "express"
-const { getUserById, postNewUser } = require("../controllers/users.controllers")
+const { getUserByEmail, logInUser, postNewUser } = require("../controllers/users.controllers")
 
 const usersRouter = express.Router()
 
-usersRouter.get("/:user_id", getUserById)
+usersRouter.route("/:user_email").get(getUserByEmail)
+    
+usersRouter.post("/authentication", logInUser)
 
 usersRouter.post("/", postNewUser)
 

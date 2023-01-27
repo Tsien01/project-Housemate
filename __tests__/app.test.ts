@@ -13,41 +13,99 @@ beforeEach(() => {
   return seed();
 });
 
-describe("GET /api/users/:user_id", () => {
+const err400: string = "400 Bad Request"
+
+const err401: string = "401 Unauthorised"
+
+const err404: string = "404 Not Found"
+
+describe("GET /api/users/:user_email", () => {
   it("should return a user object with the key of user", () => {
-      const user_id = "63d29422d66c581031b481bc";
+      const email = "Shaun.Beatty65@yahoo.com";
       return request(app)
-      .get(`/api/users/${user_id}`)
+      .get(`/api/users/${email}`)
       .expect(200)
       .then(({ body: { user } }) => {
         expect(user).toEqual(
           expect.objectContaining({
-            household_id: "hd1c6db69-2524-44ef-8870-52c2bc60e1e3",
-            firstName: "Pierre",
-            lastName: "Hudson",
-            picture:
-            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/42.jpg",
-            email: "Dawson_Wintheiser@gmail.com",
-            hashed_password:
-            "$2b$10$VHQP1/vF0R64mFTmqHJWd.wzkSoKqlcLlarJ3dseVGMuFbKzfUGgO",
-            household_password: "antiqueequivalent",
+            email: expect.any(String),
+            hashed_password: expect.any(String),
             _id: expect.any(String)
           })
           );
         });
-        
       });
-      
-      it.skip("should return a 404 if _id is valid but doesn't exist", () => {
-        const user_id = "akataoihokna"
-        
-        return request(app)
-        .get(`/api/users/${user_id}`)
-          .expect(404)
-        .then(({body:{message}}) => {
-          expect(message).toBe('404 Not Found')
+    it("should return a 404 if email format is valid but doesn't exist", () => {
+      const user_email = "bobbyb@gmail.com"
+      return request(app)
+      .get(`/api/users/${user_email}`)
+      .expect(404)
+      .then(({body:{error}}) => {
+        expect(error.message).toBe('404 Not Found')
+      })
+    })     
+    it('should return a 400 if email format is invalid', () => {
+      const user_email = 892
+      return request(app)
+        .get(`/api/users/${user_email}`)
+        .expect(400)
+        .then(({body:{error}}) => {
+          expect(error.message).toBe(`400 Bad Request`)
         })
-  
-})     
+    });
+});
+describe('POST /api/users/authentication', () => {
+  it('should return status 200, the users email and a household object that matches the posted object', () => {
+    const body = {
+      email: "Shaun.Beatty65@yahoo.com", 
+      password: "sugaryrock"
+    }
+    return request(app)
+      .post(`/api/users/authentication`)
+      .send(body)
+      .expect(200)
+      .then(({ body: { user } }) => {
+        expect(user).toEqual(
+          expect.objectContaining({
+            email: expect.any(String), 
+            household: expect.objectContaining({
+              name: expect.any(String), 
+              household_password: expect.any(String), 
+              description: expect.any(String), 
+              users: expect.any(Array), 
+              tasks: expect.any(Array), 
+              currWinner: expect.any(String)
+            })
+          })
+        )
+      })
+    });
+    it('should return a 400 and a Bad req message if request is invalid', () => {
+      const body = {
+        email: "bobbyb@gmail.com", 
+        password: "Whatever", 
+        animals: "lions", 
 
+      }
+      return request(app)
+        .post(`/api/users/authentication`)
+        .send(body)
+        .expect(400)
+        .then(({ body: { error }}) => {
+          expect(error.message).toBe("400 Bad Request")
+        })
+    });
+    it(`should return a 401 and a Unauthorised if valid email, but password doesnt match`, () => {
+      const body = {
+        email: "Wilhelm_Wiegand57@hotmail.com", 
+        password: "9245862"
+      }
+      return request(app)
+        .post(`/api/users/authentication`)
+        .send(body)
+        .expect(401)
+        .then(({ body: { error }}) => {
+          expect(error.message).toBe("401 Unauthorised")
+        })
+    });
 });

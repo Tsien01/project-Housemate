@@ -1,11 +1,15 @@
-const { selectUserById, insertNewUser } = require("../models/users.models")
+const { selectUserByEmail, insertNewUser, authenticateUserLogin } = require("../models/users.models")
 
-exports.getUserById = (req, res, next) =>{
+exports.getUserByEmail = (req, res, next) =>{
     
-    selectUserById(req.params.user_id).then((user)=>{
+    selectUserByEmail(req.params.user_email).then((user)=>{
         console.log(user, "user in controller");
         res.status(200).send({ user })
-    }).catch(next)
+    }).catch((err) => {next(err)})
+}
+
+exports.logInUser = (req, res, next) => {
+    authenticateUserLogin(req)
 }
 
 exports.postNewUser = (req, res, next) => {
