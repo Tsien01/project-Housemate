@@ -10,7 +10,7 @@ export interface HouseholdUsersObjectInterface {
 
 export const householdUsersSchema =
   new mongoose.Schema<HouseholdUsersObjectInterface>({
-    permissions: { type: [String]},
+    permissions: { type: [String] },
     currScore: { type: Number },
     name: { type: String },
     picture: { type: String },
