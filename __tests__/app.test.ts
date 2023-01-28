@@ -331,6 +331,7 @@ describe('PATCH /api/households/:household_name/tasks', () => {
     }
     return request(app)
       .patch("/api/households/Krajcik_household/tasks")
+      .send(body)
       .expect(200)
       .then(({ body: { household }}) => {
         expect(household).toEqual(
