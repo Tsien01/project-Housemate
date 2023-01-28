@@ -123,7 +123,6 @@ describe("POST /api/users", () => {
       .send(requestBody)
       .expect(201)
       .then((response) => {
-        console.log("testing>>>> 13");
         const user = response._body;
         expect(user.email).toBe("larrygary@outlook.com");
       });
@@ -218,9 +217,9 @@ describe("POST /api/households/:household_name", () => {
 describe("POST /api/households", () => {
   it("status 200: should return posted household with user added", () => {
     const body = {
-      email: "Shaun.Beatty65@yahoo.com",
+      email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
       userName: "Lukas Krajcik",
-      name: "New Household",
+      household_name: "New Household",
       household_password: "newpassword",
     };
     return request(app)
@@ -240,9 +239,8 @@ describe("POST /api/households", () => {
   });
   it("status 400: invalid request body", () => {
     const body = {
-      email: "Shaun.Beatty65@yahoo.com",
+      email: "Shaun.Beatty65@yahooooooooooooo.com",
       userName: "Lukas Krajcik",
-      name: "New Household",
       household_password: "newpassword",
     };
     return request(app)
@@ -411,10 +409,7 @@ describe("POST /api/households/:household_name/tasks", () => {
 describe("DELETE /api/households/:household_name", () => {
   it("status 204: no content", () => {
     return request(app)
-      .delete(`/api/households/Krajcik_household/users/Louie24@yahoo.com`)
+      .delete(`/api/households/users/Louie24@yahoo.com`)
       .expect(204)
-      .then((response) => {
-        expect(response.body).toBe(undefined);
-      });
   });
 });

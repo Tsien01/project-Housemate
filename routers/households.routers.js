@@ -23,6 +23,6 @@ householdsRouter
     .delete(removeTaskByTaskId_1.removeTaskByTaskId)
     .post(postNewTask_1.postNewTask);
 householdsRouter.get("/:household_id/users", getAllHouseholdUsers_1.getAllHouseholdUsers);
-householdsRouter.delete("/:household_id/users/:user_id", removeUserFromHousehold_1.removeUserFromHousehold);
+householdsRouter.delete("/users/:user_email", removeUserFromHousehold_1.removeUserFromHousehold);
 module.exports = householdsRouter;
 //# sourceMappingURL=households.routers.js.map

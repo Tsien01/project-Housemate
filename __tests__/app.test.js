@@ -119,7 +119,6 @@ var err404 = "404 Not Found";
             .send(requestBody)
             .expect(201)
             .then(function (response) {
-            console.log("testing>>>> 13");
             var user = response._body;
             (0, globals_1.expect)(user.email).toBe("larrygary@outlook.com");
         });
@@ -215,9 +214,9 @@ var err404 = "404 Not Found";
 (0, globals_1.describe)("POST /api/households", function () {
     (0, globals_1.it)("status 200: should return posted household with user added", function () {
         var body = {
-            email: "Shaun.Beatty65@yahoo.com",
+            email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
             userName: "Lukas Krajcik",
-            name: "New Household",
+            household_name: "New Household",
             household_password: "newpassword",
         };
         return request(app)
@@ -236,9 +235,8 @@ var err404 = "404 Not Found";
     });
     (0, globals_1.it)("status 400: invalid request body", function () {
         var body = {
-            email: "Shaun.Beatty65@yahoo.com",
+            email: "Shaun.Beatty65@yahooooooooooooo.com",
             userName: "Lukas Krajcik",
-            name: "New Household",
             household_password: "newpassword",
         };
         return request(app)
@@ -404,7 +402,7 @@ var err404 = "404 Not Found";
 (0, globals_1.describe)("DELETE /api/households/:household_name", function () {
     (0, globals_1.it)("status 204: no content", function () {
         return request(app)
-            .delete("/api/households/Krajcik_household/users/Louie24@yahoo.com")
+            .delete("/api/households/users/Louie24@yahoo.com")
             .expect(204)
             .then(function (response) {
             (0, globals_1.expect)(response.body).toBe(undefined);
