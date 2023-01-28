@@ -127,12 +127,14 @@ exports.insertNewUser = function (email, plainTextPwd) { return __awaiter(void 0
                     return [2 /*return*/, Promise.reject(badreq)];
                 }
                 validEmail = email;
-                hashedPwd = bcrypt.hashSync(plainTextPwd, bcrypt.genSaltSync());
+                return [4 /*yield*/, bcrypt.hash(plainTextPwd, 10)];
+            case 1:
+                hashedPwd = _a.sent();
                 Users = connection_1.db.model("User", loginRegisterSchema_1.loginRegister);
                 return [4 /*yield*/, Users.find({
                         email: validEmail,
                     })];
-            case 1:
+            case 2:
                 userByEmail = _a.sent();
                 if (userByEmail.length > 0) {
                     // email exists
@@ -147,7 +149,7 @@ exports.insertNewUser = function (email, plainTextPwd) { return __awaiter(void 0
                         .catch(function (err) {
                         return Promise.reject(err);
                     })];
-            case 2:
+            case 3:
                 _a.sent();
                 return [2 /*return*/];
         }

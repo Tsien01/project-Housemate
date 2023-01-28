@@ -79,7 +79,8 @@ exports.insertNewUser = async (email, plainTextPwd) => {
   const validEmail = email;
 
   // hash the password and store in hashedPwd variable
-  const hashedPwd = bcrypt.hashSync(plainTextPwd, bcrypt.genSaltSync());
+  // modified 28/01/2023
+  const hashedPwd = await bcrypt.hash(plainTextPwd, 10);
 
   // check if email address exists
   const Users = db.model<UsersArray>("User", loginRegister);
