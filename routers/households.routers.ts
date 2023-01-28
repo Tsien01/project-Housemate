@@ -29,7 +29,7 @@ householdsRouter
 householdsRouter.get("/:household_id/users", getAllHouseholdUsers);
 
 householdsRouter.delete(
-  "/:household_id/users/:user_id",
+  "/users/:user_email",
   removeUserFromHousehold
 );
 

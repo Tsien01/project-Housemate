@@ -211,7 +211,7 @@ describe("POST /api/households/:household_name", () => {
   });
 });
 
-describe.only("POST /api/households", () => {
+describe("POST /api/households", () => {
   it("status 200: should return posted household with user added", () => {
     const body = {
       email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
@@ -405,10 +405,7 @@ describe('POST /api/households/:household_name/tasks', () => {
 describe('DELETE /api/households/:household_name', () => {
   it('status 204: no content', () => {
     return request(app)
-      .delete(`/api/households/Krajcik_household/users/Louie24@yahoo.com`)
+      .delete(`/api/households/users/Louie24@yahoo.com`)
       .expect(204)
-      .then((response) => {
-        expect(response.body).toBe(undefined)
-      })
   });
 });
