@@ -110,17 +110,21 @@ describe("POST /api/users/authentication", () => {
   });
 });
 
-describe.only("POST /api/users", () => {
+describe("POST /api/users", () => {
   it("should return a 201 and an object containing the email if the user was succesfully registered", () => {
-    const body = {
+    const requestBody = {
       email: "larrygary@outlook.com",
       password: "larrygarypassword",
     };
+    // changed 'body' to '_body', husain 28/01/2023
+    // made adjustments to test, husain 28/01/2023
     return request(app)
       .post(`/api/users/`)
-      .send(body)
+      .send(requestBody)
       .expect(201)
-      .then(({ body: { user } }) => {
+      .then((response) => {
+        console.log("testing>>>> 13");
+        const user = response._body;
         expect(user.email).toBe("larrygary@outlook.com");
       });
   });

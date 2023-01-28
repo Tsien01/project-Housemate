@@ -39,7 +39,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = require("../db/connection");
 var loginRegisterSchema_1 = require("../db/seeds/schemas/loginRegisterSchema");
 var householdsSchema_1 = require("../db/seeds/schemas/householdsSchema");
+// bcrypt for hashing
 var bcrypt = require("bcrypt");
+// utils for email verification
+var utils = require("../utils/utils");
+// h / error objects
+var badreq = {
+    message: "400 Bad Request",
+    status: 400,
+};
+var errconflict = {
+    message: "409 Conflict",
+    status: 409,
+};
 exports.selectUserByEmail = function (user_email) { return __awaiter(void 0, void 0, void 0, function () {
     var dbModel, user;
     return __generator(this, function (_a) {
@@ -101,25 +113,41 @@ exports.authenticateUserLogin = function (body) { return __awaiter(void 0, void 
         }
     });
 }); };
-exports.insertNewUser = function (email, hashedPwd) { return __awaiter(void 0, void 0, void 0, function () {
-    var Users, mongoInput;
+exports.insertNewUser = function (email, plainTextPwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var validEmail, hashedPwd, Users, userByEmail, mongoInput;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log("insertNewUser running...");
+                // filter out bad requests, check if email is correct format
+                if (email === undefined ||
+                    plainTextPwd === undefined ||
+                    email.length === 0 ||
+                    plainTextPwd.length === 0 ||
+                    utils.validateEmail(email) === false) {
+                    return [2 /*return*/, Promise.reject(badreq)];
+                }
+                validEmail = email;
+                hashedPwd = bcrypt.hashSync(plainTextPwd, bcrypt.genSaltSync());
                 Users = connection_1.db.model("User", loginRegisterSchema_1.loginRegister);
-                mongoInput = [{ email: email, hashed_password: hashedPwd }];
-                return [4 /*yield*/, Users.insertMany(mongoInput)
-                        .then(function (mongoOutput) {
-                        console.log("insertNewUser Success>>>");
-                        var emailOutput = mongoOutput[0]["email"];
-                        return emailOutput;
-                    })
-                        .catch(function (err) {
-                        console.log("insertNewUser Fail");
-                        return Promise.reject(err);
+                return [4 /*yield*/, Users.find({
+                        email: validEmail,
                     })];
             case 1:
+                userByEmail = _a.sent();
+                if (userByEmail.length > 0) {
+                    // email exists
+                    return [2 /*return*/, Promise.reject(errconflict)];
+                }
+                mongoInput = [{ email: validEmail, hashed_password: hashedPwd }];
+                return [4 /*yield*/, Users.insertMany(mongoInput)
+                        .then(function (mongoOutput) {
+                        console.log("insertNewUser Success");
+                        return mongoOutput;
+                    })
+                        .catch(function (err) {
+                        return Promise.reject(err);
+                    })];
+            case 2:
                 _a.sent();
                 return [2 /*return*/];
         }

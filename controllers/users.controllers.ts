@@ -4,18 +4,6 @@ const {
   authenticateUserLogin,
 } = require("../models/users.models");
 
-// h / req bcrypt
-const bcrypt = require("bcrypt");
-
-// h / require utils
-const utils = require("../utils/utils");
-
-// h / error objects
-const badreq = {
-  message: "400 Bad Request",
-  status: 400,
-};
-
 exports.getUserByEmail = (req, res, next) => {
   selectUserByEmail(req.params.user_email)
     .then((user) => {
@@ -37,33 +25,20 @@ exports.logInUser = (req, res, next) => {
 };
 
 exports.postNewUser = (request, response, next) => {
+  console.log("postNewUser working...");
+
   const email = request.body.email;
   const plainTextPwd = request.body.password;
 
-  // filter out bad requests, check if email is correct format
-  if (
-    email === undefined ||
-    plainTextPwd === undefined ||
-    email.length === 0 ||
-    plainTextPwd.length === 0 ||
-    utils.validateEmail(email) === false
-  ) {
-    response.status(400).send(badreq);
-    //return Promise.reject(badreq);
-  }
-
-  // hash the password and store in hashedPwd variable
-  const hashedPwd = bcrypt.hashSync(plainTextPwd, bcrypt.genSaltSync());
-
   // send to model
-  insertNewUser(email, hashedPwd)
+  insertNewUser(email, plainTextPwd)
     .then((emailOutput) => {
-      const responseObject = { email: emailOutput };
-      console.log(responseObject);
+      // I can't seem to get anything back from mongoose to go in the emailOutput variable, im probably doing it wrong. So im just returning the originally provided email here temporarily
+      const responseObject = { email: email };
       response.status(201).send(responseObject);
     })
     .catch((err) => {
-      console.log("insertNewUser Fail 2");
+      console.log("insertNewUser Fail");
       next(err);
     });
 };

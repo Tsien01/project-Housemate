@@ -106,21 +106,18 @@ var err404 = "404 Not Found";
         });
     });
 });
-(0, globals_1.describe)("POST /api/users", function () {
+globals_1.describe.only("POST /api/users", function () {
     (0, globals_1.it)("should return a 201 and an object containing the email if the user was succesfully registered", function () {
-        var requestBody = {
+        var body = {
             email: "larrygary@outlook.com",
             password: "larrygarypassword",
         };
-        // changed 'body' to '_body', husain 28/01/2023
-        // made adjustments to test, husain 28/01/2023
         return request(app)
             .post("/api/users/")
-            .send(requestBody)
+            .send(body)
             .expect(201)
-            .then(function (response) {
-            console.log("testing>>>> 13");
-            var user = response._body;
+            .then(function (_a) {
+            var user = _a.body.user;
             (0, globals_1.expect)(user.email).toBe("larrygary@outlook.com");
         });
     });
@@ -411,4 +408,4 @@ var err404 = "404 Not Found";
         });
     });
 });
-//# sourceMappingURL=app.test.js.map
+//# sourceMappingURL=apt.js.map
