@@ -211,7 +211,7 @@ describe("POST /api/households/:household_name", () => {
   });
 });
 
-describe.only("POST /api/households", () => {
+describe("POST /api/households", () => {
   it("status 200: should return posted household with user added", () => {
     const body = {
       email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
