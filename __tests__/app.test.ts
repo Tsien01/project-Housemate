@@ -211,12 +211,12 @@ describe("POST /api/households/:household_name", () => {
   });
 });
 
-describe("POST /api/households", () => {
+describe.only("POST /api/households", () => {
   it("status 200: should return posted household with user added", () => {
     const body = {
-      email: "Shaun.Beatty65@yahoo.com",
+      email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
       userName: "Lukas Krajcik",
-      name: "New Household",
+      household_name: "New Household",
       household_password: "newpassword",
     };
     return request(app)
@@ -236,9 +236,8 @@ describe("POST /api/households", () => {
   });
   it("status 400: invalid request body", () => {
     const body = {
-      email: "Shaun.Beatty65@yahoo.com",
+      email: "Shaun.Beatty65@yahooooooooooooo.com",
       userName: "Lukas Krajcik",
-      name: "New Household",
       household_password: "newpassword",
     };
     return request(app)
