@@ -402,7 +402,7 @@ describe('POST /api/households/:household_name/tasks', () => {
   });
 });
 
-describe.only('DELETE /api/households/:household_name', () => {
+describe('DELETE /api/households/:household_name', () => {
   it('status 204: no content', () => {
     return request(app)
       .delete(`/api/households/users/Louie24@yahoo.com`)
