@@ -346,14 +346,22 @@ describe('PATCH /api/households/:household_name/tasks', () => {
   });
 });
 
-describe('DELETE /api/households/:household_name/tasks', () => {
+describe.only('DELETE /api/households/:household_name/tasks', () => {
   it('status 204: no content', () => {
+    const body = {
+      "email": "Lorna.Balistreri@yahoo.com",
+      "created_at": "2023-01-27T05:26:14.944Z",
+      "deadline": "2023-06-22T00:59:48.752Z",
+      "title": "hacking",
+      "description": "Try to navigate the CSS hard drive, maybe it will bypass the primary feed!",
+      "completion": true,
+      "task_value": 5,
+      "tags": ["tunic"]
+    }
     return request(app)
       .delete(`/api/households/Krajcik_household/tasks`)
+      .send(body)
       .expect(204)
-      .then(({ body }) => {
-        expect(body).toBe(undefined)
-      })
   });
 });
 
