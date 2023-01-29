@@ -13,6 +13,18 @@ exports.logInUser = (req, res, next) => {
     }).catch((err)=> {next(err)})
 }
 
-exports.postNewUser = (req, res, next) => {
-    insertNewUser(req)
-}
+exports.postNewUser = (request, response, next) => {
+  
+    const email = request.body.email;
+    const plainTextPwd = request.body.password;
+  
+    // send to model
+    insertNewUser(email, plainTextPwd)
+      .then(({email: returnedEmail}) => {
+        const responseObject = { user:{email: returnedEmail }};
+        response.status(201).send(responseObject);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  };

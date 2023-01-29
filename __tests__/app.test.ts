@@ -117,7 +117,7 @@ describe("POST /api/users", () => {
       password: "larrygarypassword",
     };
     return request(app)
-      .post(`/api/users/`)
+      .post(`/api/users`)
       .send(body)
       .expect(201)
       .then(({ body: { user } }) => {
@@ -131,7 +131,7 @@ describe("POST /api/users", () => {
       message: "DROP TABLES",
     };
     return request(app)
-      .post(`/api/users/`)
+      .post(`/api/users`)
       .send(body)
       .expect(400)
       .then(({ body: { error } }) => {
