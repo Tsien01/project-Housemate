@@ -110,7 +110,7 @@ describe("POST /api/users/authentication", () => {
   });
 });
 
-describe.only("POST /api/users", () => {
+describe("POST /api/users", () => {
   it("should return a 201 and an object containing the email if the user was succesfully registered", () => {
     const body = {
       email: "larrygary@outlook.com",
