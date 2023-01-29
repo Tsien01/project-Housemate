@@ -59,9 +59,6 @@ exports.authenticateUserLogin = async (body) => {
   return Promise.reject({message: "401 Unauthorised", status: 401})
 }
 
-exports.insertNewUser = (body) => {
-  console.log("I'm not ready!");
-} 
 
 exports.insertNewUser = async (email, plainTextPwd) => {
   // filter out bad requests, check if email is correct format
