@@ -1,5 +1,5 @@
 function validateEmail(input) {
-  var ef =
+  const ef =
     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
   if (input.match(ef)) {
     console.log("email: " + input + " is valid!");
