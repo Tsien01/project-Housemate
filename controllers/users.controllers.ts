@@ -25,20 +25,17 @@ exports.logInUser = (req, res, next) => {
 };
 
 exports.postNewUser = (request, response, next) => {
-  console.log("postNewUser working...");
 
   const email = request.body.email;
   const plainTextPwd = request.body.password;
 
   // send to model
   insertNewUser(email, plainTextPwd)
-    .then((emailOutput) => {
-      // I can't seem to get anything back from mongoose to go in the emailOutput variable, im probably doing it wrong. So im just returning the originally provided email here temporarily
-      const responseObject = { email: email };
+    .then(({email: returnedEmail}) => {
+      const responseObject = { user:{email: returnedEmail }};
       response.status(201).send(responseObject);
     })
     .catch((err) => {
-      console.log("insertNewUser Fail");
       next(err);
     });
 };

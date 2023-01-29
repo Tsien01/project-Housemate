@@ -12,7 +12,6 @@ const bcrypt = require("bcrypt");
 // utils for email verification
 const utils = require("../utils/utils");
 
-// h / error objects
 const badreq = {
   message: "400 Bad Request",
   status: 400,
@@ -66,6 +65,8 @@ exports.authenticateUserLogin = async (body) => {
 };
 
 exports.insertNewUser = async (email, plainTextPwd) => {
+
+  try {
   // filter out bad requests, check if email is correct format
   if (
     email === undefined ||
@@ -79,11 +80,10 @@ exports.insertNewUser = async (email, plainTextPwd) => {
   const validEmail = email;
 
   // hash the password and store in hashedPwd variable
-  // modified 28/01/2023
   const hashedPwd = await bcrypt.hash(plainTextPwd, 10);
 
   // check if email address exists
-  const Users = db.model<UsersArray>("User", loginRegister);
+  const Users = db.model("User", loginRegister);
   let userByEmail = await Users.find({
     email: validEmail,
   });
@@ -94,14 +94,11 @@ exports.insertNewUser = async (email, plainTextPwd) => {
   }
 
   // Insert user into database
-  const mongoInput = [{ email: validEmail, hashed_password: hashedPwd }];
+  const mongoInput = { email: validEmail, hashed_password: hashedPwd }
+  const newUser = await Users.create(mongoInput)
+  return newUser;
 
-  await Users.insertMany(mongoInput)
-    .then((mongoOutput) => {
-      console.log("insertNewUser Success");
-      return mongoOutput;
-    })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
+} catch (err) {
+  return Promise.reject(err);
+};
 };
