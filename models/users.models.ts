@@ -65,40 +65,38 @@ exports.authenticateUserLogin = async (body) => {
 };
 
 exports.insertNewUser = async (email, plainTextPwd) => {
-
   try {
-  // filter out bad requests, check if email is correct format
-  if (
-    email === undefined ||
-    plainTextPwd === undefined ||
-    email.length === 0 ||
-    plainTextPwd.length === 0 ||
-    utils.validateEmail(email) === false
-  ) {
-    return Promise.reject(badreq);
+    // filter out bad requests, check if email is correct format
+    if (
+      email === undefined ||
+      plainTextPwd === undefined ||
+      email.length === 0 ||
+      plainTextPwd.length === 0 ||
+      utils.validateEmail(email) === false
+    ) {
+      return Promise.reject(badreq);
+    }
+    const validEmail = email;
+
+    // hash the password and store in hashedPwd variable
+    const hashedPwd = await bcrypt.hash(plainTextPwd, 10);
+
+    // check if email address exists
+    const Users = db.model("User", loginRegister);
+    let userByEmail = await Users.find({
+      email: validEmail,
+    });
+
+    if (userByEmail.length > 0) {
+      // email exists
+      return Promise.reject(errconflict);
+    }
+
+    // Insert user into database
+    const mongoInput = { email: validEmail, hashed_password: hashedPwd };
+    const newUser = await Users.create(mongoInput);
+    return newUser;
+  } catch (err) {
+    return Promise.reject(err);
   }
-  const validEmail = email;
-
-  // hash the password and store in hashedPwd variable
-  const hashedPwd = await bcrypt.hash(plainTextPwd, 10);
-
-  // check if email address exists
-  const Users = db.model("User", loginRegister);
-  let userByEmail = await Users.find({
-    email: validEmail,
-  });
-
-  if (userByEmail.length > 0) {
-    // email exists
-    return Promise.reject(errconflict);
-  }
-
-  // Insert user into database
-  const mongoInput = { email: validEmail, hashed_password: hashedPwd }
-  const newUser = await Users.create(mongoInput)
-  return newUser;
-
-} catch (err) {
-  return Promise.reject(err);
-};
 };

@@ -25,14 +25,13 @@ exports.logInUser = (req, res, next) => {
 };
 
 exports.postNewUser = (request, response, next) => {
-
   const email = request.body.email;
   const plainTextPwd = request.body.password;
 
   // send to model
   insertNewUser(email, plainTextPwd)
-    .then(({email: returnedEmail}) => {
-      const responseObject = { user:{email: returnedEmail }};
+    .then(({ email: returnedEmail }) => {
+      const responseObject = { user: { email: returnedEmail } };
       response.status(201).send(responseObject);
     })
     .catch((err) => {
