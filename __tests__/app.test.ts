@@ -211,12 +211,14 @@ describe("POST /api/households/:household_name", () => {
   });
 });
 
-describe("POST /api/households", () => {
+describe.only("POST /api/households", () => {
   it("status 200: should return posted household with user added", () => {
     const body = {
       email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
       userName: "Lukas Krajcik",
       household_name: "New Household",
+      // add a password for new users, if no password is provided, the user already exists
+      password: "newuserpassword",
       household_password: "newpassword",
     };
     return request(app)
