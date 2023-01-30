@@ -2,7 +2,7 @@ import { db } from "../../db/connection";
 import { householdObjectSchema } from "../../db/seeds/schemas/householdsSchema";
 
 export async function insertNewTask ({email, created_at, deadline, title, description, completion, task_value, tags}) {
-
+    const connection = await db; 
     // reject if certain fields are missing, expecting that FE will provide default values
     if (!email || !created_at || !deadline || !title || !task_value){
         return Promise.reject({
@@ -17,7 +17,7 @@ export async function insertNewTask ({email, created_at, deadline, title, descri
         })
      }
     
-    const dbHouseholdModel = await db.model("household", householdObjectSchema);
+    const dbHouseholdModel = await connection.model("household", householdObjectSchema);
     const usersHouseholdDoc = await dbHouseholdModel.find({"users.email": email})
 
     // ensure title is unique

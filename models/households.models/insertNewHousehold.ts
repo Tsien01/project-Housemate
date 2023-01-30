@@ -2,7 +2,9 @@ import { db } from "../../db/connection";
 import { householdObjectSchema } from "../../db/seeds/schemas/householdsSchema";
 
 export async function insertNewHousehold({email, userName, household_name, household_password}) {
-    const dbHouseholdModel = await db.model("household", householdObjectSchema);
+    const connection = await db
+
+    const dbHouseholdModel = await connection.model("household", householdObjectSchema);
 
      // find if user exists in a household already:
     const checkIfUserAlreadyHasHousehold = await dbHouseholdModel.find({"users.email": email})

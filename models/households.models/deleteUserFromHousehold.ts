@@ -3,8 +3,9 @@ import { householdObjectSchema } from "../../db/seeds/schemas/householdsSchema";
 
 
 export async function deleteUserFromHousehold (user_email) {
+    const connection = await db
     
-    const householdModel = db.model("household", householdObjectSchema)
+    const householdModel = connection.model("household", householdObjectSchema)
     let household = await householdModel.find({ "users.email": user_email })
     //currently needs additional checks if user is admin or if user is removing themselves
     if (household[0].users.length !== 1) {
