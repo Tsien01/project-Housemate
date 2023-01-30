@@ -17,7 +17,9 @@
   "scripts": {
     "seed": "npx ts-node ./db/seeds/run-seed.ts",
     "test": "jest",
-    "seed-prod": "NODE_ENV=production npm run seed"
+    "seed-dev": "NODE_ENV=development npm run seed", 
+    "seed-prod": "NODE_ENV=production npm run seed", 
+    "start": "npx ts-node listen.ts"
   },
   "repository": {
     "type": "git",

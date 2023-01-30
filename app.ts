@@ -14,4 +14,4 @@ app.use("/api/households", householdsRouter)
 
 app.use(handleErrors)
 
-module.exports = app
+export { app }
