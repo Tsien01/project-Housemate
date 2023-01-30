@@ -217,7 +217,6 @@ describe("POST /api/households", () => {
       email: "Shaun.Beatty65@yahoooooooooooooooooooooooo.com",
       userName: "Lukas Krajcik",
       household_name: "New Household",
-      household_password: "newpassword",
     };
     return request(app)
       .post(`/api/households`)
@@ -346,7 +345,7 @@ describe('PATCH /api/households/:household_name/tasks', () => {
   });
 });
 
-describe.only('DELETE /api/households/:household_name/tasks', () => {
+describe('DELETE /api/households/:household_name/tasks', () => {
   it('status 204: no content', () => {
     const body = {
       "email": "Lorna.Balistreri@yahoo.com",

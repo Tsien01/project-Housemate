@@ -1,3 +1,5 @@
+const { faker } = require("@faker-js/faker");
+
 function validateEmail(input) {
     const ef =
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
@@ -7,5 +9,10 @@ function validateEmail(input) {
       return false;
     }
   }
-  
-  module.exports = { validateEmail };
+
+function generateHHPassword() {
+  return faker.word.adjective() + faker.word.noun();
+}
+
+
+module.exports = { validateEmail, generateHHPassword };
