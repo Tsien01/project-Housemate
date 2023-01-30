@@ -40,6 +40,8 @@ exports.updateHouseholdUsers = async (body) => {
     household_password: body["household_password"],
   });
 
+  return updatedHousehold[0];
+}
 
 //hardcoded user props when adding user to existing household
 // currScore: 0,

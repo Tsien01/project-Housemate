@@ -252,7 +252,7 @@ describe("POST /api/households", () => {
 });
 
 describe.only("PATCH /api/households/:household_name", () => {
-  it.only("status 200: should return patched household with new user added", () => {
+  it("status 200: should return patched household with new user added", () => {
     const body = {
       email: "AdrianB@yahoo.com",
       name: "Adrian B",
