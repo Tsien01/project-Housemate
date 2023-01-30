@@ -17,7 +17,6 @@ exports.updateHouseholdUsers = async (body) => {
   const household = await dbHouseholdModel.find({
     household_password: body["household_password"],
   });
-  //console.log(household, "non existent hh")
   if(household.length === 0) {
     return Promise.reject({ status: 404, message: "404 Not Found"})
   }
@@ -30,7 +29,6 @@ exports.updateHouseholdUsers = async (body) => {
     const indexOfExistingUser = userEmailsArray.indexOf(body.email);
 
     household[0].users.splice(indexOfExistingUser, 1);
-    //console.log(household[0].users);
     await household[0].save();
   }
 

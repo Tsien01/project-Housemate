@@ -251,7 +251,7 @@ describe("POST /api/households", () => {
   });
 });
 
-describe.only("PATCH /api/households/:household_name", () => {
+describe("PATCH /api/households/:household_name", () => {
   it("status 200: should return patched household with new user added", () => {
     const body = {
       email: "AdrianB@yahoo.com",  //stored on frontend- frotnend variable referenced to put into patch body
