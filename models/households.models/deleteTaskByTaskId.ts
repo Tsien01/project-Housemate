@@ -3,7 +3,9 @@ import { householdObjectSchema } from "../../db/seeds/schemas/householdsSchema"
 
 
 export async function deleteTaskByTaskId (taskBody) {
-    const householdModel = db.model("household", householdObjectSchema)
+    const connection = await db
+    
+    const householdModel = connection.model("household", householdObjectSchema)
 
     let household = await householdModel.find({ "users.email": taskBody.email })
 

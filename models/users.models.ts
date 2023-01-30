@@ -24,8 +24,9 @@ exports.selectUserByEmail = async (user_email) => {
       status: 400, 
     })
   }
+  const connection = await db
 
-  const dbModel = await db.model("user", loginRegister);
+  const dbModel = await connection.model("user", loginRegister);
   
   const user = await dbModel.find({ email: user_email })
   if (user.length === 0) {
@@ -39,8 +40,10 @@ exports.selectUserByEmail = async (user_email) => {
 };
 
 exports.authenticateUserLogin = async (body) => {
+  const connection = await db
+
   const email = body.email
-  const dbModel = await db.model("user", loginRegister);
+  const dbModel = await connection.model("user", loginRegister);
   const user = await dbModel.find({ email: email })
   if (user.length === 0) {
     return Promise.reject({
@@ -50,7 +53,7 @@ exports.authenticateUserLogin = async (body) => {
   }
   
   if (await bcrypt.compare(body.password, user[0]["hashed_password"])) {
-    const dbHouseholdModel = await db.model("household", householdObjectSchema);
+    const dbHouseholdModel = await connection.model("household", householdObjectSchema);
     const household = await dbHouseholdModel.find({"users.email": email})
     return {household: household[0], email: email}
   }
@@ -76,8 +79,9 @@ exports.insertNewUser = async (email, plainTextPwd) => {
   // hash the password and store in hashedPwd variable
   const hashedPwd = await bcrypt.hash(plainTextPwd, 10);
 
+  const connection = await db; 
   // check if email address exists
-  const Users = db.model("User", loginRegister);
+  const Users = connection.model("User", loginRegister);
   let userByEmail = await Users.find({
     email: validEmail,
   });

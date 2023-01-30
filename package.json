@@ -8,7 +8,8 @@
     "express": "^4.18.2",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.4",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "typescript": "^4.9.4"
   },
   "name": "project-housemate",
   "description": "",
@@ -17,7 +18,9 @@
   "scripts": {
     "seed": "npx ts-node ./db/seeds/run-seed.ts",
     "test": "jest",
-    "seed-prod": "NODE_ENV=production npm run seed"
+    "seed-dev": "NODE_ENV=development npm run seed",
+    "seed-prod": "NODE_ENV=production npm run seed",
+    "start": "npx ts-node listen.ts"
   },
   "repository": {
     "type": "git",

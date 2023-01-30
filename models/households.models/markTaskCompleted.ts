@@ -2,8 +2,10 @@ import { db } from "../../db/connection";
 import { householdObjectSchema } from "../../db/seeds/schemas/householdsSchema";
 
 
-export async function markTaskCompleted (taskBody) {    
-    const householdModel = db.model("household", householdObjectSchema)
+export async function markTaskCompleted (taskBody) {
+    const connection = await db; 
+
+    const householdModel = connection.model("household", householdObjectSchema)
 
     let household = await householdModel.find({ "users.email": taskBody.email })
     

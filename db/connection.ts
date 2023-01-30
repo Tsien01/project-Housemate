@@ -9,7 +9,13 @@ dotenv.config({
 if (!process.env.MONGODATABASE && !process.env.MONGOURL) {
     throw new Error(`MONGODATABASE or MONGOURL not set`)
 }
-const databasePath: string = process.env.MONGODATABASE ? `mongodb://localhost:27017/${process.env.MONGODATABASE}` : `mongodb://localhost:27017/${process.env.MONGOURL}`
+let db;
+const databasePath: string = process.env.MONGODATABASE ? `mongodb://localhost:27017/${process.env.MONGODATABASE}` : process.env.MONGOURL
+if (ENV === "production") {
+    db = mongoose.createConnection(databasePath, { user: process.env.USER, pass: process.env.PASS }).asPromise()
+} else {
+    db = mongoose.createConnection(databasePath).asPromise()
+}
 
-export const db = mongoose.createConnection(databasePath)
+export { db }
 console.log(`${ENV} is the ENV, connected to ${databasePath}`);
