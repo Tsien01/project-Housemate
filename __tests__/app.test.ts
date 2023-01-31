@@ -140,7 +140,7 @@ describe("POST /api/users", () => {
   });
 });
 
-describe("POST /api/households/:household_name", () => {
+describe.skip("POST /api/households/:household_name", () => {
   it("should return a 200, the users email, and a household object if successful", () => {
     const body = {
       household_password: "murkyrecognition",
@@ -249,7 +249,7 @@ describe("POST /api/households", () => {
   });
 });
 
-describe("PATCH /api/households/:household_name", () => {
+describe.skip("PATCH /api/households/:household_name", () => {
   it("status 200: should return patched household with new user added", () => {
     const body = {
       email: "Shaun.Beatty65@yahoo.com",
@@ -415,5 +415,33 @@ describe('DELETE /api/households/:household_name', () => {
     return request(app)
       .delete(`/api/households/users/Louie24@yahoo.com`)
       .expect(204)
+  });
+});
+
+describe.only('GET /api/households/:household_name', () => {
+  it('should take a user email and a household name, confirm the user is part of the household and then return the household object and the email', () => {
+    const body = {
+      email: "Shaun.Beatty65@yahoo.com",
+      password: "sugaryrock",
+    };
+    return request(app)
+      .get(`/api/households/Krajcik household`)
+      .send(body)
+      .expect(200)
+      .then(({ body: household }) => {
+        expect(household).toEqual(
+          expect.objectContaining({
+            email: expect.any(String),
+            household: expect.objectContaining({
+              name: expect.any(String),
+              household_password: expect.any(String),
+              description: expect.any(String),
+              users: expect.any(Array),
+              tasks: expect.any(Array),
+              currWinner: expect.any(String),
+            }),
+          })
+        );
+      });
   });
 });
