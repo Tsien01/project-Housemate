@@ -418,14 +418,13 @@ describe('DELETE /api/households/:household_name', () => {
   });
 });
 
-describe.only('GET /api/households/:household_name', () => {
+describe.only('POST /api/households/:household_name', () => {
   it('should take a user email and a household name, confirm the user is part of the household and then return the household object and the email', () => {
     const body = {
-      email: "Shaun.Beatty65@yahoo.com",
-      password: "sugaryrock",
+      email: "Shaun.Beatty65@yahoo.com"
     };
     return request(app)
-      .get(`/api/households/Krajcik household`)
+      .post(`/api/households/Krajcik household`)
       .send(body)
       .expect(200)
       .then(({ body: household }) => {
