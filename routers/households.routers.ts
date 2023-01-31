@@ -8,14 +8,15 @@ import { removeTaskByTaskId } from "../controllers/households.controllers/remove
 import { postNewTask } from "../controllers/households.controllers/postNewTask";
 import { getAllHouseholdUsers } from "../controllers/households.controllers/getAllHouseholdUsers";
 import { removeUserFromHousehold } from "../controllers/households.controllers/removeUserFromHousehold";
+import { postHouseholdObject } from "../controllers/households.controllers/postHouseholdObject";
 
 const householdsRouter = express.Router();
 
 householdsRouter
   .route("/:household_id/authentication")
-  .post(postNewUserToHousehold);
+  .post(postNewUserToHousehold); // to be removed - see postNewUser
 
-householdsRouter.route("/:household_id").patch(patchHouseholdUsers);
+householdsRouter.route("/:household_id").patch(patchHouseholdUsers).post(postHouseholdObject);
 
 householdsRouter.post("/", postNewHousehold);
 

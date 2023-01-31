@@ -8,6 +8,8 @@ exports.getUserByEmail = (req, res, next) =>{
 }
 
 exports.logInUser = (req, res, next) => { 
+  console.log(req);
+  
     authenticateUserLogin(req.body).then((household)=>{
         res.status(200).send(household)
     }).catch((err)=> {next(err)})

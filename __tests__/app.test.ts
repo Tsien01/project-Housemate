@@ -417,3 +417,30 @@ describe('DELETE /api/households/:household_name', () => {
       .expect(204)
   });
 });
+
+describe('POST /api/households/:household_name', () => {
+  it('should take a user email and a household name, confirm the user is part of the household and then return the household object and the email', () => {
+    const body = {
+      email: "Shaun.Beatty65@yahoo.com"
+    };
+    return request(app)
+      .post(`/api/households/Krajcik household`)
+      .send(body)
+      .expect(200)
+      .then(({ body: household }) => {
+        expect(household).toEqual(
+          expect.objectContaining({
+            email: expect.any(String),
+            household: expect.objectContaining({
+              name: expect.any(String),
+              household_password: expect.any(String),
+              description: expect.any(String),
+              users: expect.any(Array),
+              tasks: expect.any(Array),
+              currWinner: expect.any(String),
+            }),
+          })
+        );
+      });
+  });
+});
