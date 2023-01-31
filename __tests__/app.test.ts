@@ -418,7 +418,7 @@ describe('DELETE /api/households/:household_name', () => {
   });
 });
 
-describe.only('POST /api/households/:household_name', () => {
+describe('POST /api/households/:household_name', () => {
   it('should take a user email and a household name, confirm the user is part of the household and then return the household object and the email', () => {
     const body = {
       email: "Shaun.Beatty65@yahoo.com"
